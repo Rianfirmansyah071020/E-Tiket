@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Rute;
 use App\Models\Admin;
 use App\Models\Harga;
+use App\Models\Pemesanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,6 +17,7 @@ class HargaController extends Controller
         $User = Auth::user();
         $idlUser = Admin::all()->where('email', $User->email)->value('id');
         $userLogin = Admin::find($idlUser);
+        $jumlahPemesanan = Pemesanan::all()->count();
 
 
         return view('admin.harga.index', [
@@ -23,7 +25,9 @@ class HargaController extends Controller
             'route' => 'Dashboard / Harga ',
             'userLogin' => $userLogin,
             'rute' => Rute::all(),
-            'data' => Harga::all()
+            'data' => Harga::all(),
+            'pemesanan' => Pemesanan::all()->where('status', 'belum'),
+            'jumlahPemesanan' => Pemesanan::all()->where('status', 'belum')->count()
         ]);
     }
 
@@ -67,6 +71,7 @@ class HargaController extends Controller
         $User = Auth::user();
         $idlUser = Admin::all()->where('email', $User->email)->value('id');
         $userLogin = Admin::find($idlUser);
+        $jumlahPemesanan = Pemesanan::all()->count();
 
 
         return view('admin.harga.update', [
@@ -74,7 +79,9 @@ class HargaController extends Controller
             'route' => 'Dashboard / Harga / Update',
             'userLogin' => $userLogin,
             'rute' => Rute::all(),
-            'data' => Harga::find($id)
+            'data' => Harga::find($id),
+            'pemesanan' => Pemesanan::all()->where('status', 'belum'),
+            'jumlahPemesanan' => Pemesanan::all()->where('status', 'belum')->count()
         ]);
     }
 

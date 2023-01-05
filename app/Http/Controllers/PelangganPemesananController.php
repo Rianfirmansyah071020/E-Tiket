@@ -26,28 +26,32 @@ class PelangganPemesananController extends Controller
         ->join('pembayarans', 'pemesanans.id', '=', 'pembayarans.pemesanan_id')
         ->select('pemesanans.id')
         ->where('pemesanans.pelanggan_id', $userLogin->id)->get();
-        
+
     //    $datakursi = DB::table('kursis')
     //    ->join('pemesanans', 'kursis.id', '=', 'pemesanans.kursi_id')
     //    ->where('kursis.id', '=', 'pemesanans.kursi_id')
     //    ->get();
 
-            $pembayaran = Pembayaran::all()->value('pemesanan_id');
-            
-            $idkursi = Pemesanan::all()->value('kursi_id');
-            $datakursi = Kursi::all()->where('id', '!=', $idkursi); 
 
-       
-        
+            $pembayaran = Pembayaran::all()->value('pemesanan_id');
+
+            $idkursi = Pemesanan::all()->value('kursi_id');
+            $datakursi = Kursi::all()->where('id', '!=', $idkursi);
+
+            $tanggal_ini = date('Y-m-d');
+
+
+            $kursi = Kursi::all()->where('tanggal_pesan','!=', $tanggal_ini)->where('status_pesan', '!=', 'pesan');
+
         return view('pelanggan.pemesanan.index', [
             'title' => 'Pemesanan | E-tiket',
             'route' => 'Dashboard / Pemesanan ',
             'userLogin' => $userLogin,
-            'kursi' => Kursi::all(),
+            'kursi' => $kursi,
             'jadwal' => Jadwal::all(),
             'harga' => Harga::all(),
-            'pemesanan' => Pemesanan::all()->where('pelanggan_id', $idlUser),  
-            'dataKursi' => $datakursi,            
+            'pemesanan' => Pemesanan::all()->where('pelanggan_id', $idlUser)->where('status', 'belum'),
+            'dataKursi' => $datakursi,
         ])->with('p', $p);
     }
 
@@ -71,6 +75,20 @@ class PelangganPemesananController extends Controller
         $idlUser = Pelanggan::all()->where('email', $User->email)->value('id');
         $userLogin = Pelanggan::find($idlUser);
 
+        $cek_pesan = Kursi::all()->where('id', $request->kursi_id)->where('tanggal_pesan', '=' ,$request->tanggal_berangkat)->count();
+
+
+        if($cek_pesan > 0) {
+
+            return redirect('/pelanggan/dashboard/kelolapemesanan')->with('cek', 'Kursi Yang Anda Pilih Sudah Di Pesan Pada Tanggal Yang Sama Harap Pilih Kursi Lain Atau Tanggal Lain');
+        }
+
+        $kursi = Kursi::find($request->kursi_id);
+        $kursi->update([
+            'status_kursi' => 'pesan',
+            'tanggal_pesan' => $request->tanggal_berangkat
+        ]);
+
         $pesanTiket = Pemesanan::create([
             'pelanggan_id' => $idlUser,
             'kursi_id' => $request->kursi_id,
@@ -78,7 +96,8 @@ class PelangganPemesananController extends Controller
             'harga_id' => $request->harga_id,
             'tanggal_berangkat' => $request->tanggal_berangkat,
             'jumlah' => $request->jumlah,
-            'total' => $total
+            'total' => $total,
+            'status' => 'belum'
         ]);
 
 
@@ -149,6 +168,15 @@ class PelangganPemesananController extends Controller
 
 
     public function batal($id) {
+
+        $idKursi = Pemesanan::all()->where('id', $id)->value('kursi_id');
+
+        $kursi = Kursi::find($idKursi);
+
+        $kursi->update([
+            'status_kursi' => null,
+            'tanggal_pesan' => null
+        ]);
 
         $batal = Pemesanan::find($id)->delete();
 

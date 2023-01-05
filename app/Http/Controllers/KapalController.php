@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use App\Models\Kapal;
 use App\Models\Kursi;
+use App\Models\Pemesanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -17,13 +18,16 @@ class KapalController extends Controller
         $User = Auth::user();
         $idlUser = Admin::all()->where('email', $User->email)->value('id');
         $userLogin = Admin::find($idlUser);
+        $jumlahPemesanan = Pemesanan::all()->count();
 
 
         return view('admin.kapal.index', [
             'title' => 'Kapal | E-tiket',
             'route' => 'Dashboard / Kapal ',
             'userLogin' => $userLogin,
-            'data' => Kapal::all()
+            'data' => Kapal::all(),
+            'pemesanan' => Pemesanan::all()->where('status', 'belum'),
+            'jumlahPemesanan' => Pemesanan::all()->where('status', 'belum')->count()
         ]);
     }
 
@@ -82,13 +86,16 @@ class KapalController extends Controller
         $User = Auth::user();
         $idlUser = Admin::all()->where('email', $User->email)->value('id');
         $userLogin = Admin::find($idlUser);
+        $jumlahPemesanan = Pemesanan::all()->count();
 
 
         return view('admin.kapal.detail', [
             'title' => 'Kapal | E-tiket',
             'route' => 'Dashboard / Kapal / Detail ',
             'userLogin' => $userLogin,
-            'data' => Kapal::find($id)
+            'data' => Kapal::find($id),
+            'pemesanan' => Pemesanan::all()->where('status', 'belum'),
+            'jumlahPemesanan' => Pemesanan::all()->where('status', 'belum')->count()
         ]);
     }
 
@@ -98,13 +105,16 @@ class KapalController extends Controller
         $User = Auth::user();
         $idlUser = Admin::all()->where('email', $User->email)->value('id');
         $userLogin = Admin::find($idlUser);
+        $jumlahPemesanan = Pemesanan::all()->count();
 
 
         return view('admin.kapal.update', [
             'title' => 'Kapal | E-tiket',
             'route' => 'Dashboard / Kapal / Update ',
             'userLogin' => $userLogin,
-            'data' => Kapal::find($id)
+            'data' => Kapal::find($id),
+            'pemesanan' => Pemesanan::all()->where('status', 'belum'),
+            'jumlahPemesanan' => Pemesanan::all()->where('status', 'belum')->count()
         ]);
     }
 

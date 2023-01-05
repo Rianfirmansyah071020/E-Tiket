@@ -6,6 +6,7 @@ use PDF;
 use App\Models\User;
 use App\Models\Admin;
 use App\Models\Pelanggan;
+use App\Models\Pemesanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -21,12 +22,15 @@ class PelangganController extends Controller
         $User = Auth::user();
         $idlUser = Admin::all()->where('email', $User->email)->value('id');
         $userLogin = Admin::find($idlUser);
+        $jumlahPemesanan = Pemesanan::all()->count();
 
         return view('admin.pelanggan.index', [
             'title' => 'Pelanggan | E-tiket',
             'route' => 'Dashboard / Pelanggan',
             'data' => Pelanggan::all(),
-            'userLogin' => $userLogin
+            'userLogin' => $userLogin,
+            'pemesanan' => Pemesanan::all()->where('status', 'belum'),
+            'jumlahPemesanan' => Pemesanan::all()->where('status', 'belum')->count()
         ]);
     }
 
@@ -37,12 +41,15 @@ class PelangganController extends Controller
         $User = Auth::user();
         $idlUser = Admin::all()->where('email', $User->email)->value('id');
         $userLogin = Admin::find($idlUser);
+        $jumlahPemesanan = Pemesanan::all()->count();
 
         return view('admin.pelanggan.detail', [
             'title' => 'Pelanggan | E-tiket',
             'route' => 'Dashboard / Pelanggan / Detail',
             'data' => Pelanggan::find($id),
-            'userLogin' => $userLogin
+            'userLogin' => $userLogin,
+            'pemesanan' => Pemesanan::all()->where('status', 'belum'),
+            'jumlahPemesanan' => Pemesanan::all()->where('status', 'belum')->count()
         ]);
     }
 
@@ -75,12 +82,15 @@ class PelangganController extends Controller
         $User = Auth::user();
         $idlUser = Admin::all()->where('email', $User->email)->value('id');
         $userLogin = Admin::find($idlUser);
+        $jumlahPemesanan = Pemesanan::all()->count();
 
         return view('admin.pelanggan.update', [
             'title' => 'Pelanggan | E-tiket',
             'route' => 'Dashboard / Pelanggan / Update',
             'data' => Pelanggan::find($id),
-            'userLogin' => $userLogin
+            'userLogin' => $userLogin,
+            'pemesanan' => Pemesanan::all()->where('status', 'belum'),
+            'jumlahPemesanan' => Pemesanan::all()->where('status', 'belum')->count()
         ]);
     }
 

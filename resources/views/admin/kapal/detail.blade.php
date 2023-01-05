@@ -7,7 +7,9 @@
     <div class="row card shadow p-4">
         <div class="d-lg-flex d-xl-flex justify-content-center">
             <div class="col-lg-8 col-xl-8">
-                <img src="/storage/kapal/{{ $data->gambar }}" alt="{{ $data->gambar }}" class="card-img-top ">
+                <div>
+                    <img src="/storage/kapal/{{ $data->gambar }}" alt="{{ $data->gambar }}" class="img-card-top img-profil">
+                </div>
             </div>
             <div class="col-lg-3 col-xl-3">
                 <p>Nama Kapal : {{ $data->nama }}</p>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Admin;
+use App\Models\Pemesanan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -19,12 +20,15 @@ class ProfilAdminController extends Controller
         $User = Auth::user();
         $idlUser = Admin::all()->where('email', $User->email)->value('id');
         $userLogin = Admin::find($idlUser);
+        $jumlahPemesanan = Pemesanan::all()->count();
 
         return view('admin.profil.index', [
             'title' => 'Profil | E-tiket',
             'route' => 'Dashboard / Profil',
             'data' => Admin::find($id),
-            'userLogin' => $userLogin
+            'userLogin' => $userLogin,
+            'pemesanan' => Pemesanan::all()->where('status', 'belum'),
+            'jumlahPemesanan' => Pemesanan::all()->where('status', 'belum')->count()
         ]);
     }
 
@@ -34,12 +38,15 @@ class ProfilAdminController extends Controller
         $User = Auth::user();
         $idlUser = Admin::all()->where('email', $User->email)->value('id');
         $userLogin = Admin::find($idlUser);
+        $jumlahPemesanan = Pemesanan::all()->count();
 
         return view('admin.profil.setting', [
             'title' => 'Profil | E-tiket',
             'route' => 'Dashboard / Profil / Setting',
             'data' => Admin::find($id),
-            'userLogin' => $userLogin
+            'userLogin' => $userLogin,
+            'pemesanan' => Pemesanan::all()->where('status', 'belum'),
+            'jumlahPemesanan' => Pemesanan::all()->where('status', 'belum')->count()
         ]);
     }
 

@@ -5,6 +5,9 @@
         Pemesanan Tiket
     </div>
 
+    @if (session('cek'))
+        <div class="alert alert-danger p-4 m-2">{{ session('cek') }}</div>
+    @endif
     <form action="/pelanggan/dashboard/kelolapemesanan/create" method="post">
         @csrf
         <div class="row card shadow p-4">
@@ -25,7 +28,7 @@
                         <label for="kursi_id">Pilih Kursi Dan Kapal</label>
                         <select name="kursi_id" id="kursi_id" class="form-control">
                             <option value="">Pilih Kursi Dan Kapal</option>
-                            @foreach ($dataKursi as $row)
+                            @foreach ($kursi as $row)
                                 <option value="{{ $row->id }}" @selected($row->id === old('kursi_id'))>Kursi ->
                                     {{ $row->nama_kursi }} || Kapal
                                     -> {{ $row->kapal->nama }}</option>
@@ -135,9 +138,9 @@
                                         <td class="text-center">{{ $row->harga->rute->awal }} -
                                             {{ $row->harga->rute->tujuan }}</td>
 
-                                        <td class="text-right">{{ number_format($row->harga->harga) }}</td>
+                                        <td class="text-right">Rp.{{ number_format($row->harga->harga) }}</td>
                                         <td class="text-right">{{ $row->jumlah }}</td>
-                                        <td class="text-right">{{ number_format($row->total) }}</td>
+                                        <td class="text-right">Rp.{{ number_format($row->total) }}</td>
                                         <td class="d-flex justify-content-end">
                                             <a href="/pelanggan/dashboard/kelolapemesanan/update/{{ $row->id }}"
                                                 class="btn btn-success m-1">

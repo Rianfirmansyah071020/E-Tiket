@@ -20,8 +20,9 @@ class DashboardAdminController extends Controller
 
         $jumlahAdmin = Admin::all()->count();
         $jumlahPelanggan = Pelanggan::all()->count();
-        $jumlahPemesanan = Pemesanan::all()->count();
+        $jumlahPemesanan = Pemesanan::all()->where('status', 'belum')->count();
         $jumlahTransaksi = Pembayaran::all()->sum('total');
+        $pemesanan = Pemesanan::all();
 
 
         return view('admin.dashboard.index', [
@@ -30,8 +31,9 @@ class DashboardAdminController extends Controller
             'userLogin' => $userLogin,
             'jumlahAdmin' => $jumlahAdmin,
             'jumlahPelanggan' => $jumlahPelanggan,
-            'jumlahPemesanan' => $jumlahPemesanan,
             'jumlahTransaksi' => $jumlahTransaksi,
+            'pemesanan' => Pemesanan::all()->where('status', 'belum'),
+            'jumlahPemesanan' => Pemesanan::all()->where('status', 'belum')->count()
         ]);
     }
 }

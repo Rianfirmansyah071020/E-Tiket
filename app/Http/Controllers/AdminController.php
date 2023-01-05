@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Admin;
+use App\Models\Pemesanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -18,17 +19,21 @@ class AdminController extends Controller
         $User = Auth::user();
         $idlUser = Admin::all()->where('email', $User->email)->value('id');
         $userLogin = Admin::find($idlUser);
+        $jumlahPemesanan = Pemesanan::all()->count();
 
         return view('admin.admin.index', [
             'title' => 'Admin | E-tiket',
             'route' => 'Dashboard / Admin',
             'data' => Admin::all(),
-            'userLogin' => $userLogin
+            'userLogin' => $userLogin,
+            'pemesanan' => Pemesanan::all()->where('status', 'belum'),
+            'jumlahPemesanan' => Pemesanan::all()->where('status', 'belum')->count()
         ]);
     }
 
 
     public function create(Request $request) {
+
 
         $validasi = $request->validate([
             'email' => 'required|unique:admins,email',
@@ -103,11 +108,15 @@ class AdminController extends Controller
         $idlUser = Admin::all()->where('email', $User->email)->value('id');
         $userLogin = Admin::find($idlUser);
 
+        $jumlahPemesanan = Pemesanan::all()->count();
+
         return view('admin.admin.detail', [
             'title' => 'Admin | E-tiket',
             'route' => 'Dashboard / Admin / Detail',
             'data' => Admin::find($id),
-            'userLogin' => $userLogin
+            'userLogin' => $userLogin,
+            'pemesanan' => Pemesanan::all()->where('status', 'belum'),
+            'jumlahPemesanan' => Pemesanan::all()->where('status', 'belum')->count()
         ]);
     }
 
@@ -117,12 +126,15 @@ class AdminController extends Controller
         $User = Auth::user();
         $idlUser = Admin::all()->where('email', $User->email)->value('id');
         $userLogin = Admin::find($idlUser);
+        $jumlahPemesanan = Pemesanan::all()->count();
 
         return view('admin.admin.update', [
             'title' => 'Admin | E-tiket',
             'route' => 'Dashboard / Admin / Update',
             'data' => Admin::find($id),
-            'userLogin' => $userLogin
+            'userLogin' => $userLogin,
+            'pemesanan' => Pemesanan::all()->where('status', 'belum'),
+            'jumlahPemesanan' => Pemesanan::all()->where('status', 'belum')->count()
         ]);
     }
 

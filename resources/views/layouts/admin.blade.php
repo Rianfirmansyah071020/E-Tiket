@@ -69,7 +69,41 @@
                 <div class="header-right">
                     <ul class="clearfix">
                         <li class="icons dropdown d-none d-md-flex">
+                            <div class="col">
+                                <div class="dropdown custom-dropdown" style="color:black;">
+                                    <div data-toggle="dropdown">
+                                        <i class="mdi mdi-bell-outline" style="font-size: 30px;"></i>
+                                        <span
+                                            class="badge badge-pill gradient-2 badge-primary">{{ $jumlahPemesanan }}</span><i
+                                            class="fa fa-angle-down m-l-5"></i>
+                                    </div>
+                                    <div class="dropdown-menu dropdown-menu-right" style="line-height: 0.5cm;">
+                                        <?php $a = 1; ?>
+                                        @foreach ($pemesanan as $row)
+                                            <a class="dropdown-item bg-success text-center p-2"
+                                                style="color: black;">Pemesanan
+                                                {{ $a }}</a>
+                                            <a class="dropdown-item " style="color: black;">Nama Pemesan :
+                                                {{ $row->pelanggan->nama }}</a>
+                                            <a class="dropdown-item" style="color: black;">Rute Perjalanan :
+                                                {{ $row->harga->rute->awal }} -
+                                                {{ $row->harga->rute->tujuan }}</a>
+                                            <a class="dropdown-item " style="color: black;">Tanggal Keberangkatan :
+                                                {{ $row->tanggal_berangkat }}</a>
+                                            <a class="dropdown-item " style="color: black;">Jumlah Pesan :
+                                                {{ $row->jumlah }}</a>
+                                            <a class="dropdown-item " style="color: black;">Total Pembayaran :
+                                                Rp.{{ number_format($row->total) }}</a>
+                                            <hr>
+                                            <?php $a++; ?>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
                         </li>
+
+                        <!-- Button trigger modal -->
+
                         <li class="icons dropdown">
                             <div class="user-img c-pointer position-relative" data-toggle="dropdown">
                                 <small>{{ $userLogin->nama }}</small>

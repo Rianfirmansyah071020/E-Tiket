@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use App\Models\Kapal;
 use App\Models\Kursi;
+use App\Models\Pemesanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,6 +18,7 @@ class KursiController extends Controller
         $User = Auth::user();
         $idlUser = Admin::all()->where('email', $User->email)->value('id');
         $userLogin = Admin::find($idlUser);
+        $jumlahPemesanan = Pemesanan::all()->count();
 
         return view('admin.kursi.index', [
             'title' => 'Kursi | E-tiket',
@@ -24,6 +26,8 @@ class KursiController extends Controller
             'data' => Kursi::all(),
             'userLogin' => $userLogin,
             'kapal' => Kapal::all(),
+            'pemesanan' => Pemesanan::all()->where('status', 'belum'),
+            'jumlahPemesanan' => Pemesanan::all()->where('status', 'belum')->count()
         ]);
     }
 
@@ -64,6 +68,7 @@ class KursiController extends Controller
         $User = Auth::user();
         $idlUser = Admin::all()->where('email', $User->email)->value('id');
         $userLogin = Admin::find($idlUser);
+        $jumlahPemesanan = Pemesanan::all()->count();
 
         return view('admin.kursi.update', [
             'title' => 'Kursi | E-tiket',
@@ -71,6 +76,8 @@ class KursiController extends Controller
             'data' => Kursi::find($id),
             'userLogin' => $userLogin,
             'kapal' => Kapal::all(),
+            'pemesanan' => Pemesanan::all()->where('status', 'belum'),
+            'jumlahPemesanan' => Pemesanan::all()->where('status', 'belum')->count()
         ]);
     }
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use App\Models\Jadwal;
+use App\Models\Pemesanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,13 +16,16 @@ class JadwalController extends Controller
         $User = Auth::user();
         $idlUser = Admin::all()->where('email', $User->email)->value('id');
         $userLogin = Admin::find($idlUser);
+        $jumlahPemesanan = Pemesanan::all()->count();
 
 
         return view('admin.jadwal.index', [
             'title' => 'Jadwal | E-tiket',
             'route' => 'Dashboard / Jadwal ',
             'userLogin' => $userLogin,
-            'data' => Jadwal::all()
+            'data' => Jadwal::all(),
+            'pemesanan' => Pemesanan::all()->where('status', 'belum'),
+            'jumlahPemesanan' => Pemesanan::all()->where('status', 'belum')->count()
         ]);
     }
 
@@ -67,13 +71,15 @@ class JadwalController extends Controller
         $User = Auth::user();
         $idlUser = Admin::all()->where('email', $User->email)->value('id');
         $userLogin = Admin::find($idlUser);
-
+        $jumlahPemesanan = Pemesanan::all()->count();
 
         return view('admin.jadwal.update', [
             'title' => 'Jadwal | E-tiket',
             'route' => 'Dashboard / Jadwal ',
             'userLogin' => $userLogin,
-            'data' => Jadwal::find($id)
+            'data' => Jadwal::find($id),
+            'pemesanan' => Pemesanan::all()->where('status', 'belum'),
+            'jumlahPemesanan' => Pemesanan::all()->where('status', 'belum')->count()
         ]);
     }
 

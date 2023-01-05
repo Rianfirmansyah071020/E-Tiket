@@ -23,6 +23,7 @@ return new class extends Migration
             $table->date('tanggal_berangkat');
             $table->integer('jumlah');
             $table->integer('total');
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

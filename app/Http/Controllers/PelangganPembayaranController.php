@@ -7,6 +7,7 @@ use App\Models\Pembayaran;
 use App\Models\Pemesanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class PelangganPembayaranController extends Controller
@@ -19,12 +20,17 @@ class PelangganPembayaranController extends Controller
         $userLogin = Pelanggan::find($idlUser);
         $id = Pemesanan::all()->where('pelanggan_id', $idlUser)->value('id');
 
+        $pembayaran = DB::table('pembayarans')->join('pemesanans', 'pembayarans.pemesanan_id', 'pemesanans.id')
+        ->select('pembayarans.created_at','pembayarans.transaksi_id', 'pembayarans.pdf_url', 'pembayarans.tipe_payment', 'pembayarans.status_pesan', 'pembayarans.status_transaksi', 'pembayarans.total', 'pembayarans.id' )
+        ->where('pembayarans.pelanggan_id', $idlUser)
+        ->where('pemesanans.status', '!=', 'selesai')->get();
+
+
         return view('pelanggan.pembayaran.index', [
             'title' => 'Pembayaran | E-tiket',
             'route' => 'Dashboard / Pembayaran ',
             'userLogin' => $userLogin,
-            'pembayaran' => Pembayaran::all()->where('pelanggan_id', $idlUser),
-        ]);
+        ])->with('pembayaran', $pembayaran);
     }
 
 
@@ -87,6 +93,13 @@ class PelangganPembayaranController extends Controller
 
         $json = json_decode($request->get('json'));
 
+        $pemesanan = Pemesanan::find($id);
+
+        $pemesanan->update([
+            'status' => 'bayar'
+        ]);
+
+
         $bayar = Pembayaran::create([
             'pemesanan_id' => $id,
             'pelanggan_id' => $userLogin->id,
@@ -98,6 +111,7 @@ class PelangganPembayaranController extends Controller
             'pdf_url' => isset($json->pdf_url) ? $json->pdf_url : null,
             'total' => $json->gross_amount
         ]);
+
 
         if($bayar) {
             return redirect('/pelanggan/dashboard/kelolapembayaran')->with('success', 'Pembayaran berhasil');

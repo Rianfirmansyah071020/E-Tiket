@@ -133,7 +133,7 @@ Route::put('/pelanggan/dashboard/profil/setting/{id}/{email}', [ProfilPelangganC
 // kelola pemesanan (admin)
 Route::get('/admin/dashboard/kelolapemesanan', [PemesananController::class, 'index']);
 Route::get('/admin/dashboard/kelolapemesanan/cetak', [PemesananController::class, 'cetak']);
-
+Route::get('/admin/dashboard/kelolapemesanan/selesai/{id}', [PemesananController::class, 'selesai']);
 
 // kelola pembayaran (pelanggan)
 Route::get('/pelanggan/dashboard/kelolapembayaran', [PelangganPembayaranController::class, 'index']);

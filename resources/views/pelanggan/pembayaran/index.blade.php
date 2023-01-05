@@ -22,7 +22,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($pembayaran as $row)
+                                @foreach ($pembayaran as $data => $row)
                                     <tr>
                                         <td class="text-center">{{ $loop->iteration }}</td>
                                         <td>{{ $row->transaksi_id }}</td>
@@ -30,8 +30,8 @@
                                         <td>{{ $row->tipe_payment }}</td>
                                         <td>{{ $row->status_pesan }}</td>
                                         <td>{{ $row->status_transaksi }}</td>
-                                        <td>{{ number_format($row->total) }}</td>
-                                        <td>{{ $row->created_at->diffForHumans() }}</td>
+                                        <td>Rp.{{ number_format($row->total) }}</td>
+                                        <td>{{ $row->created_at }}</td>
                                         <td> <a href="/tiket/{{ $row->id }}" class="btn btn-warning">tiket</a></td>
                                     </tr>
                                 @endforeach

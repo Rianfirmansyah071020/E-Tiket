@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('kapal_id');
             $table->string('nama_kursi');
+            $table->string('status_kursi')->nullable();
+            $table->date('tanggal_pesan')->nullable();
             $table->timestamps();
         });
     }

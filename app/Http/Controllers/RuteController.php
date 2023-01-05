@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Rute;
 use App\Models\Admin;
+use App\Models\Pemesanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,13 +16,16 @@ class RuteController extends Controller
         $User = Auth::user();
         $idlUser = Admin::all()->where('email', $User->email)->value('id');
         $userLogin = Admin::find($idlUser);
+        $jumlahPemesanan = Pemesanan::all()->count();
 
 
         return view('admin.rute.index', [
             'title' => 'Rute | E-tiket',
             'route' => 'Dashboard / Rute ',
             'userLogin' => $userLogin,
-            'data' => Rute::all()
+            'data' => Rute::all(),
+            'pemesanan' => Pemesanan::all()->where('status', 'belum'),
+            'jumlahPemesanan' => Pemesanan::all()->where('status', 'belum')->count()
         ]);
     }
 
@@ -69,13 +73,16 @@ class RuteController extends Controller
         $User = Auth::user();
         $idlUser = Admin::all()->where('email', $User->email)->value('id');
         $userLogin = Admin::find($idlUser);
+        $jumlahPemesanan = Pemesanan::all()->count();
 
 
         return view('admin.rute.update', [
             'title' => 'Rute | E-tiket',
             'route' => 'Dashboard / Rute / Update',
             'userLogin' => $userLogin,
-            'data' => Rute::find($id)
+            'data' => Rute::find($id),
+            'pemesanan' => Pemesanan::all()->where('status', 'belum'),
+            'jumlahPemesanan' => Pemesanan::all()->where('status', 'belum')->count()
         ]);
     }
 
