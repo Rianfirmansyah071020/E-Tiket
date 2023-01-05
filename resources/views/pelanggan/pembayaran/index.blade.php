@@ -18,6 +18,7 @@
                                     <th class="text-center">Status Transaksi</th>
                                     <th class="text-center">Total</th>
                                     <th class="text-center">Waktu</th>
+                                    <th class="text-center">Tiket</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -31,6 +32,7 @@
                                         <td>{{ $row->status_transaksi }}</td>
                                         <td>{{ number_format($row->total) }}</td>
                                         <td>{{ $row->created_at->diffForHumans() }}</td>
+                                        <td> <a href="/tiket/{{ $row->id }}" class="btn btn-warning">tiket</a></td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -44,6 +46,7 @@
                                     <th class="text-center">Status Transaksi</th>
                                     <th class="text-center">Total</th>
                                     <th class="text-center">Waktu</th>
+                                    <th class="text-center">Tiket</th>
                                 </tr>
                             </tfoot>
                         </table>

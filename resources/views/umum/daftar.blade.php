@@ -2,8 +2,12 @@
 
 @section('content')
     <div class="container card shadow">
-        <div class="alert alert-warning p-4 mt-2">
-            <h4>Bagi yang ingin memesanan tiket silahkan daftar terlebih dahulu, setelah daftar lakukan login</h4>
+        <div class="p-4 mt-2">
+            <div class="d-flex justify-content-center">
+                <div style="border-bottom: 3px solid rgb(105, 91, 11); width:max-content;">
+                    <h4>Bagi yang ingin memesanan tiket silahkan daftar terlebih dahulu, setelah daftar lakukan login</h4>
+                </div>
+            </div>
         </div>
         <form action="/pelanggan/create" method="post" enctype="multipart/form-data">
             @csrf

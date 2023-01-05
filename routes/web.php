@@ -2,6 +2,7 @@
 
 use App\Models\Pemesanan;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PayController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RuteController;
 use App\Http\Controllers\AdminController;
@@ -9,19 +10,19 @@ use App\Http\Controllers\HargaController;
 use App\Http\Controllers\KapalController;
 use App\Http\Controllers\KursiController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\TiketController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\PemesananController;
 use App\Http\Controllers\kirimEmailController;
+use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\ProfilAdminController;
 use App\Http\Controllers\DashboardAdminController;
-use App\Http\Controllers\PayController;
 use App\Http\Controllers\ProfilPelangganController;
 use App\Http\Controllers\PelangganDashboardController;
 use App\Http\Controllers\PelangganPemesananController;
 use App\Http\Controllers\PelangganPembayaranController;
-use App\Http\Controllers\PembayaranController;
 
 /*
 |--------------------------------------------------------------------------
@@ -86,6 +87,7 @@ Route::get('/admin/dashboard/profil/setting/{id}', [ProfilAdminController::class
 Route::put('/admin/dashboard/profil/setting/{id}/{email}', [ProfilAdminController::class, 'setting_aksi']);
 
 // folder home
+Route::get('/', [HomeController::class, 'index']);
 Route::get('/home', [HomeController::class, 'index']);
 Route::get('/daftar', [HomeController::class, 'daftar']);
 Route::post('/pelanggan/create', [HomeController::class, 'create']);
@@ -143,3 +145,6 @@ Route::get('/pay', [PayController::class, 'index']);
 
 // kelola pembayaran (admin)
 Route::get('/admin/dashboard/kelolapembayaran', [PembayaranController::class, 'index']);
+
+// Tiket
+Route::get('/tiket/{id}', [TiketController::class, 'index']);

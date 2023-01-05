@@ -10,17 +10,27 @@
         </div>
         <div class="carousel-inner">
             <div class="carousel-item active" data-bs-interval="10000">
-                <img src="/content/design.png" class="d-block w-100" alt="...">
+                <img src="/content/bac1.jpeg" class="d-block w-100" alt="..." style="height: 33rem">
                 <div class="carousel-caption d-none d-md-block">
                 </div>
             </div>
             <div class="carousel-item" data-bs-interval="2000">
-                <img src="/content/design.png" class="d-block w-100" alt="...">
+                <img src="/content/bac2.jpeg" class="d-block w-100" alt="..." style="height: 33rem">
                 <div class="carousel-caption d-none d-md-block">
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="/content/design.png" class="d-block w-100" alt="...">
+                <img src="/content/bac3.jpeg" class="d-block w-100" alt="..." style="height: 33rem">
+                <div class="carousel-caption d-none d-md-block">
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="/content/bac5.jpeg" class="d-block w-100" alt="..." style="height: 33rem">
+                <div class="carousel-caption d-none d-md-block">
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="/content/bac6.jpeg" class="d-block w-100" alt="..." style="height: 33rem">
                 <div class="carousel-caption d-none d-md-block">
                 </div>
             </div>
@@ -35,9 +45,13 @@
         </button>
     </div>
 
-    <div class="container">
-        <div class="row mt-4">
-            <h2 class="text-center">PT ASDP Indonesia Ferry ( Persero)</h2>
+    <div class="container-lg container-xl container-md mb-5">
+        <div class="row mt-4 card bg-light p-5" style="border-bottom: 4px solid rgb(124, 107, 8);">
+            <div class="d-flex justify-content-center mb-5">
+                <div style="width:max-content; border-bottom:4px solid rgb(109, 93, 5);">
+                    <h2 class="text-center">PT ASDP Indonesia Ferry ( Persero)</h2>
+                </div>
+            </div>
             <div class="pt-1 pl-5 pr-5">
                 PT ASDP Indonesia Ferry ( Persero) atau ASDP adalah BUMN yang bergerak dalam bisnis jasa penyeberangan dan
                 pelabuhan terintegrasi dan tujuan wisata waterfront. ASDP menjalankan armada ferry sebanyak lebih dari 200
@@ -46,7 +60,7 @@
                 Marina Labuan Bajo di Nusa Tenggara Timur.
             </div>
         </div>
-        <div class="row mt-5">
+        <div class="row mt-2 card bg-light p-5" style="border-bottom: 4px solid rgb(124, 107, 8);">
             <table class="table table-bordered table-hover">
                 <tr>
                     <th>Alamat</th>
@@ -72,6 +86,18 @@
                             class="text-link">www.indonesiaferry.co.id</a></td>
                 </tr>
             </table>
+        </div>
+
+        <div class="mt-2 card p-3">
+            <div class="d-flex justify-content-center mb-5">
+                <div style="width:max-content; border-bottom:4px solid rgb(109, 93, 5);">
+                    <h2 class="text-center">Lokasi</h2>
+                </div>
+            </div>
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7978.549385446724!2d100.366805!3d-0.945838!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x2c8873c9a96ebd41!2sPT.%20ASDP%20Indonesia%20Ferry%20(Persero)%20Padang!5e0!3m2!1sid!2sus!4v1671849577888!5m2!1sid!2sus"
+                width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
     </div>
 @endsection

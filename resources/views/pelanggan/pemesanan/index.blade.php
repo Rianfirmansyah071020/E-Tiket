@@ -25,7 +25,7 @@
                         <label for="kursi_id">Pilih Kursi Dan Kapal</label>
                         <select name="kursi_id" id="kursi_id" class="form-control">
                             <option value="">Pilih Kursi Dan Kapal</option>
-                            @foreach ($kursi as $row)
+                            @foreach ($dataKursi as $row)
                                 <option value="{{ $row->id }}" @selected($row->id === old('kursi_id'))>Kursi ->
                                     {{ $row->nama_kursi }} || Kapal
                                     -> {{ $row->kapal->nama }}</option>

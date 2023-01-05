@@ -14,9 +14,10 @@
     <link rel="stylesheet" href="/sass/main.css">
 </head>
 
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
-        <a class="navbar-brand" href="/home">E-Tiket</a>
+<body style="background-color: rgb(9, 31, 51);">
+    <nav class="navbar navbar-expand-lg navbar-light position-fixed w-100 d-flex"
+        style="z-index: 100; background-color: rgb(9, 31, 51);">
+        <a class="navbar-brand text-white" href="/home">E-Tiket</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -24,19 +25,30 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item @if ($route === 'home') active @endif">
-                    <a class="nav-link " href="/home">Home</a>
+                    <a class="nav-link text-white" href="/home">Home</a>
                 </li>
                 <li class="nav-item @if ($route === 'daftar') active @endif">
-                    <a class="nav-link " href="/daftar">Daftar</a>
+                    <a class="nav-link text-white" href="/daftar">Daftar</a>
                 </li>
                 <li class="nav-item @if ($route === 'login') active @endif">
-                    <a class="nav-link " href="/login">Login</a>
+                    <a class="nav-link text-white" href="/login">Login</a>
                 </li>
             </ul>
         </div>
     </nav>
+    <div style="padding:38px;"></div>
 
     @yield('content')
+
+    <d class="m-5"></d>
+
+    <footer class="bg-secondary p-3">
+        <div class="d-flex justify-content-center">
+            <small>
+                &copy; Copyright {{ date('Y') }}
+            </small>
+        </div>
+    </footer>
 
 
     <script src="/plugins/common/common.min.js"></script>

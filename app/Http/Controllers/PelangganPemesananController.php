@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Harga;
-use App\Models\Jadwal;
 use App\Models\Kursi;
+use App\Models\Jadwal;
 use App\Models\Pelanggan;
-use App\Models\Pembayaran;
 use App\Models\Pemesanan;
+use App\Models\Pembayaran;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class PelangganPemesananController extends Controller
@@ -21,7 +22,23 @@ class PelangganPemesananController extends Controller
         $idlUser = Pelanggan::all()->where('email', $User->email)->value('id');
         $userLogin = Pelanggan::find($idlUser);
 
+        $p = DB::table('pemesanans')
+        ->join('pembayarans', 'pemesanans.id', '=', 'pembayarans.pemesanan_id')
+        ->select('pemesanans.id')
+        ->where('pemesanans.pelanggan_id', $userLogin->id)->get();
+        
+    //    $datakursi = DB::table('kursis')
+    //    ->join('pemesanans', 'kursis.id', '=', 'pemesanans.kursi_id')
+    //    ->where('kursis.id', '=', 'pemesanans.kursi_id')
+    //    ->get();
 
+            $pembayaran = Pembayaran::all()->value('pemesanan_id');
+            
+            $idkursi = Pemesanan::all()->value('kursi_id');
+            $datakursi = Kursi::all()->where('id', '!=', $idkursi); 
+
+       
+        
         return view('pelanggan.pemesanan.index', [
             'title' => 'Pemesanan | E-tiket',
             'route' => 'Dashboard / Pemesanan ',
@@ -29,8 +46,9 @@ class PelangganPemesananController extends Controller
             'kursi' => Kursi::all(),
             'jadwal' => Jadwal::all(),
             'harga' => Harga::all(),
-            'pemesanan' => Pemesanan::all()->where('pelanggan_id', $idlUser),
-        ]);
+            'pemesanan' => Pemesanan::all()->where('pelanggan_id', $idlUser),  
+            'dataKursi' => $datakursi,            
+        ])->with('p', $p);
     }
 
 
